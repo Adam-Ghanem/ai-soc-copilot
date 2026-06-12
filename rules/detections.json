@@ -1,0 +1,47 @@
+[
+  {
+    "rule_id": "AUTH-001",
+    "name": "Failed logons followed by successful authentication",
+    "event_type": "auth",
+    "severity": "high",
+    "tactic": "Credential Access / Initial Access",
+    "keywords": ["failed", "success"],
+    "analyst_action": "Review source IP, confirm user activity, check MFA status, and inspect nearby authentication events."
+  },
+  {
+    "rule_id": "PROC-002",
+    "name": "Suspicious PowerShell execution pattern",
+    "event_type": "process",
+    "severity": "high",
+    "tactic": "Execution",
+    "keywords": ["powershell", "encodedcommand"],
+    "analyst_action": "Collect command line, parent process, script block logs, and endpoint timeline before containment decisions."
+  },
+  {
+    "rule_id": "NET-003",
+    "name": "Rare outbound destination from workstation",
+    "event_type": "network",
+    "severity": "medium",
+    "tactic": "Command and Control",
+    "keywords": ["rare", "outbound"],
+    "analyst_action": "Validate destination reputation, compare with baseline, and check related DNS/proxy events."
+  },
+  {
+    "rule_id": "IAM-004",
+    "name": "Privileged group membership change",
+    "event_type": "identity",
+    "severity": "critical",
+    "tactic": "Privilege Escalation",
+    "keywords": ["added", "privileged"],
+    "analyst_action": "Confirm change ticket, verify administrator identity, and review recent privilege usage."
+  },
+  {
+    "rule_id": "ENDPOINT-005",
+    "name": "Security control tamper signal",
+    "event_type": "endpoint",
+    "severity": "high",
+    "tactic": "Defense Evasion",
+    "keywords": ["tamper", "disabled"],
+    "analyst_action": "Check EDR health, isolate only if policy requires it, and collect endpoint telemetry."
+  }
+]
