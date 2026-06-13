@@ -1,32 +1,29 @@
 # AI SOC Copilot
 
-A defensive SOC engineering portfolio project that turns noisy security alerts into structured triage decisions, analyst-ready investigation notes, and safe incident summaries.
+A defensive SOC engineering portfolio project that turns noisy security alerts into structured triage decisions, analyst-ready cases, local enrichment notes, and safe incident reports.
 
-This is not an offensive tool. It is a local-first SOC assistant designed for alert enrichment, prioritization, and reporting using transparent detection logic instead of black-box claims.
+This is a local-first SOC assistant for alert prioritization and reporting using transparent logic instead of black-box claims.
+
+## Portfolio value
+
+AI SOC Copilot demonstrates practical SOC engineering: reliable parsing, rule-based detection, evidence preservation, analyst workflow design, safe reporting, and security-focused code structure.
 
 ## SOC use case
 
-Security teams receive repeated alerts from EDR, SIEM, firewall, identity, and endpoint logs. Junior analysts often need to answer the same first questions:
-
-- What happened?
-- Which host or user is affected?
-- How severe is the alert?
-- Which MITRE ATT&CK tactic is likely involved?
-- What evidence should be checked next?
-- What can be written in the incident ticket?
-
-AI SOC Copilot automates the first-pass triage workflow while keeping the final decision with the analyst.
+SOC teams receive repeated alerts from EDR, SIEM, firewall, identity, and endpoint logs. Analysts need to understand what happened, which host or user is affected, how severe the event is, which findings belong together, and what evidence should be reviewed next.
 
 ## Features
 
 - JSONL alert ingestion with strict input validation.
 - Rule-based detection and risk scoring.
-- MITRE-style tactic mapping for common SOC scenarios.
+- SOC context mapping for common monitoring scenarios.
 - Safe enrichment from local indicators only.
-- Analyst notes generated from evidence, not invented facts.
+- Deterministic case grouping by host and user.
+- Analyst case queue with priority, observables, timeline, and recommended actions.
 - Markdown incident report export.
+- Structured `cases.json` export for dashboards or future APIs.
 - Sample logs and validation tests.
-- Secure defaults: no secrets, no external calls, no dangerous execution.
+- Secure defaults: no secrets, no external calls, no unsafe execution.
 
 ## Architecture
 
@@ -36,8 +33,9 @@ flowchart LR
     B --> C[Detection rule engine]
     C --> D[Risk scoring]
     D --> E[Local enrichment]
-    E --> F[Triage decision]
+    E --> F[Case builder]
     F --> G[Markdown incident report]
+    F --> H[Structured cases.json]
 ```
 
 ## Repository structure
@@ -45,6 +43,7 @@ flowchart LR
 ```text
 ai-soc-copilot/
 ├── src/ai_soc_copilot/
+│   ├── case_builder.py
 │   ├── cli.py
 │   ├── detection.py
 │   ├── enrichment.py
@@ -54,8 +53,10 @@ ai-soc-copilot/
 │   └── triage.py
 ├── rules/detections.json
 ├── samples/security_events.jsonl
+├── tests/test_case_builder.py
 ├── tests/test_triage.py
 ├── docs/architecture.md
+├── docs/case-management-workflow.md
 ├── .env.example
 ├── .gitignore
 ├── SECURITY.md
@@ -68,38 +69,47 @@ ai-soc-copilot/
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
 pip install -e .
-python -m ai_soc_copilot.cli --input samples/security_events.jsonl --output reports/incident_report.md
+python -m ai_soc_copilot.cli --input samples/security_events.jsonl --output reports/incident_report.md --case-json reports/cases.json
 ```
 
 ## Example output
 
 ```text
-Processed alerts: 5
-High severity: 2
-Medium severity: 2
-Low severity: 1
-Report written to reports/incident_report.md
+Processed events: 5
+Findings: 5
+Cases: 4
+Markdown report written to reports/incident_report.md
+Structured cases written to reports/cases.json
 ```
 
-## Detection examples
+## Case management workflow
 
-| Rule | What it detects | SOC value |
-|---|---|---|
-| AUTH-001 | Multiple failed logins followed by success | Possible account compromise |
-| PROC-002 | Suspicious PowerShell arguments | Endpoint investigation priority |
-| NET-003 | Rare outbound destination from workstation | Possible command-and-control lead |
-| IAM-004 | New privileged group membership | Identity security escalation |
+The case builder groups matching findings by host and user, then produces a deterministic `CASE-*` ID, priority, timeline, observables, context labels, and response guidance. See [`docs/case-management-workflow.md`](docs/case-management-workflow.md).
+
+## Design / branding
+
+Branding direction: minimal SOC engineering, monochrome base, muted blue accent, technical workflow diagrams, and no generic hacker visuals. A Canva README visual/architecture doc was created for portfolio presentation:
+
+- Canva design: AI SOC Copilot: Cybersecurity Portfolio
+- View link: https://www.canva.com/d/Bh3p8LOEHSJLEvI
 
 ## Security and responsible use
 
-This project is intentionally defensive. It does not exploit systems, steal credentials, deploy malware, or run arbitrary commands. All included data is synthetic and safe for portfolio demonstration.
+This project is intentionally defensive. It does not exploit systems, collect private data, deploy unsafe code, or run arbitrary commands. All included data is synthetic and safe for portfolio demonstration.
 
 See [SECURITY.md](SECURITY.md) for secure-use notes.
 
+## Dependency and security notes
+
+- Keep the project local unless intentionally integrating it into a lab dashboard.
+- Use `.env.example` for configuration documentation and never commit `.env` files.
+- Run tests before publishing changes.
+- Treat sample reports as demonstration artifacts, not real incident records.
+
 ## CV-ready description
 
-**AI SOC Copilot** — Built a local-first defensive SOC triage assistant that ingests SIEM/EDR-style JSONL alerts, validates event schemas, applies transparent detection rules, maps findings to MITRE-style tactics, scores risk, enriches indicators locally, and generates analyst-ready Markdown incident reports with safe sample data and validation tests.
+**AI SOC Copilot** — Built a local-first defensive SOC triage assistant that ingests SIEM/EDR-style JSONL alerts, validates event schemas, applies transparent detection rules, scores risk, correlates findings into analyst cases, extracts safe observables, and generates Markdown plus JSON case reports with synthetic sample data and validation tests.
 
 ## Tech stack
 
-Python 3.11+, dataclasses, argparse, JSONL, pytest, Markdown, Mermaid diagrams.
+Python 3.11+, dataclasses, argparse, JSONL, pytest, Markdown, Mermaid diagrams, Canva documentation visual.
