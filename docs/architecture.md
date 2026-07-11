@@ -58,4 +58,4 @@ sequenceDiagram
 
 ## Design notes
 
-The visual identity should stay minimal: clean SOC dashboard style, calm colors, no hacker clichés, no fake 3D visuals, and no claims of production AI replacement. The strongest portfolio angle is responsible automation: AI-assisted triage with analyst control.
+The visual identity should stay minimal: clean SOC dashboard style, calm colors, and no exaggerated capability claims. The strongest portfolio angle is transparent, analyst-controlled automation.
