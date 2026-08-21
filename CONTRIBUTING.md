@@ -21,11 +21,28 @@ pip install -e '.[dev]'
 
 ## Run the tests
 
+From the repository root, run:
+
 ```bash
-pytest
+python -m pytest -q
 ```
 
+The repository configures `src/` on the pytest import path, so you do not need to set `PYTHONPATH` manually. If `pytest` is not installed, install the development extras first with `pip install -e '.[dev]'`.
+
 Before opening a pull request, make sure the test suite passes locally.
+
+## Run the sample workflow
+
+To exercise the complete local-first pipeline with the included synthetic events:
+
+```bash
+python -m ai_soc_copilot.cli \
+  --input samples/security_events.jsonl \
+  --output reports/incident_report.md \
+  --case-json reports/cases.json
+```
+
+This should process the sample events and write both a Markdown incident report and structured case JSON under `reports/`.
 
 ## Making changes
 
