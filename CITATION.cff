@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "AI SOC Copilot"
+type: software
+abstract: "A local-first defensive SOC alert triage assistant with transparent detection, risk scoring, case management, and safe incident reporting."
+authors:
+  - family-names: Ghanem
+    given-names: Adam
+license: MIT
+repository-code: "https://github.com/Adam-Ghanem/ai-soc-copilot"
+version: 0.1.0
+date-released: 2026-08-21
