@@ -31,3 +31,15 @@ def test_summary_contains_core_soc_fields() -> None:
     assert summary["total_findings"] == 5
     assert "idm-01" in summary["affected_hosts"]
     assert "admin.demo" in summary["affected_users"]
+
+
+def test_empty_summary_is_deterministic() -> None:
+    summary = summarize_findings([])
+
+    assert summary == {
+        "total_findings": 0,
+        "severity": {},
+        "top_tactics": {},
+        "affected_hosts": [],
+        "affected_users": [],
+    }
