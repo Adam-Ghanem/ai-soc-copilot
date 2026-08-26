@@ -86,13 +86,6 @@ Structured cases written to reports/cases.json
 
 The case builder groups matching findings by host and user, then produces a deterministic `CASE-*` ID, priority, timeline, observables, context labels, and response guidance. See [`docs/case-management-workflow.md`](docs/case-management-workflow.md).
 
-## Design / branding
-
-Branding direction: minimal SOC engineering, monochrome base, muted blue accent, technical workflow diagrams, and no generic hacker visuals. A Canva README visual/architecture doc was created for portfolio presentation:
-
-- Canva design: AI SOC Copilot: Cybersecurity Portfolio
-- View link: https://www.canva.com/d/Bh3p8LOEHSJLEvI
-
 ## Security and responsible use
 
 This project is intentionally defensive. It does not exploit systems, collect private data, deploy unsafe code, or run arbitrary commands. All included data is synthetic and safe for portfolio demonstration.
@@ -112,4 +105,4 @@ See [SECURITY.md](SECURITY.md) for secure-use notes.
 
 ## Tech stack
 
-Python 3.11+, dataclasses, argparse, JSONL, pytest, Markdown, Mermaid diagrams, Canva documentation visual.
+Python 3.11+, dataclasses, argparse, JSONL, pytest, Markdown, and Mermaid diagrams.
