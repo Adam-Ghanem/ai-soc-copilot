@@ -1,78 +1,111 @@
 # AI SOC Copilot
 
-A defensive SOC engineering portfolio project that turns noisy security alerts into structured triage decisions, analyst-ready cases, local enrichment notes, and safe incident reports.
+> **Turn noisy security alerts into clear, evidence-driven SOC decisions.**
 
-This is a local-first SOC assistant for alert prioritization and reporting using transparent logic instead of black-box claims.
+<p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/Adam-Ghanem/ai-soc-copilot/ci.yml?label=CI" alt="CI">
+  <img src="https://img.shields.io/github/stars/Adam-Ghanem/ai-soc-copilot" alt="GitHub stars">
+  <img src="https://img.shields.io/github/commit-activity/m/Adam-Ghanem/ai-soc-copilot" alt="Commit activity">
+  <img src="https://img.shields.io/github/languages/top/Adam-Ghanem/ai-soc-copilot" alt="Top language">
+</p>
 
-## Portfolio value
+AI SOC Copilot is a **local-first defensive SOC assistant** that transforms SIEM/EDR-style alerts into structured findings, prioritized cases, analyst guidance, and incident-ready reports.
 
-AI SOC Copilot demonstrates practical SOC engineering: reliable parsing, rule-based detection, evidence preservation, analyst workflow design, safe reporting, and security-focused code structure.
+It focuses on **transparent detection, deterministic triage, evidence preservation, and safe workflows** rather than black-box security claims.
 
-## SOC use case
+## ⚡ Highlights
 
-SOC teams receive repeated alerts from EDR, SIEM, firewall, identity, and endpoint logs. Analysts need to understand what happened, which host or user is affected, how severe the event is, which findings belong together, and what evidence should be reviewed next.
+- 📥 Strict JSONL alert ingestion and schema validation
+- 🔎 Rule-based detection engine
+- 📊 Transparent risk scoring and prioritization
+- 🧩 Deterministic correlation and case grouping
+- 🕵️ Safe local indicator enrichment
+- 🗂️ Analyst-ready case queue with timelines and observables
+- 📝 Markdown incident report generation
+- 📦 Structured JSON case output for dashboards and automation
+- 🧪 Synthetic security events and automated validation tests
+- 🛡️ Secure, local-first defaults with no arbitrary execution
 
-## Features
-
-- JSONL alert ingestion with strict input validation.
-- Rule-based detection and risk scoring.
-- SOC context mapping for common monitoring scenarios.
-- Safe enrichment from local indicators only.
-- Deterministic case grouping by host and user.
-- Analyst case queue with priority, observables, timeline, and recommended actions.
-- Markdown incident report export.
-- Structured `cases.json` export for dashboards or future APIs.
-- Sample logs and validation tests.
-- Secure defaults: no secrets, no external calls, no unsafe execution.
-
-## Architecture
-
-```mermaid
-flowchart LR
-    A[Sample SIEM / EDR alerts] --> B[Parser + schema validation]
-    B --> C[Detection rule engine]
-    C --> D[Risk scoring]
-    D --> E[Local enrichment]
-    E --> F[Case builder]
-    F --> G[Markdown incident report]
-    F --> H[Structured cases.json]
-```
-
-## Repository structure
+## 🏗️ Architecture
 
 ```text
-ai-soc-copilot/
-├── src/ai_soc_copilot/
-│   ├── case_builder.py
-│   ├── cli.py
-│   ├── detection.py
-│   ├── enrichment.py
-│   ├── models.py
-│   ├── parser.py
-│   ├── report.py
-│   └── triage.py
-├── rules/detections.json
-├── samples/security_events.jsonl
-├── tests/test_case_builder.py
-├── tests/test_triage.py
-├── docs/architecture.md
-├── docs/case-management-workflow.md
-├── .env.example
-├── .gitignore
-├── SECURITY.md
-└── pyproject.toml
+                  ┌──────────────────────┐
+                  │   SIEM / EDR Alerts  │
+                  │      JSONL Input     │
+                  └──────────┬───────────┘
+                             │
+                  ┌──────────▼───────────┐
+                  │ Parser + Validation  │
+                  └──────────┬───────────┘
+                             │
+                  ┌──────────▼───────────┐
+                  │ Detection Rule Engine│
+                  └──────────┬───────────┘
+                             │
+                  ┌──────────▼───────────┐
+                  │    Risk / Triage     │
+                  └──────────┬───────────┘
+                             │
+                  ┌──────────▼───────────┐
+                  │  Local Enrichment    │
+                  └──────────┬───────────┘
+                             │
+                  ┌──────────▼───────────┐
+                  │     Case Builder     │
+                  └──────────┬───────────┘
+                             │
+                    ┌────────┴────────┐
+                    │                 │
+             ┌──────▼──────┐   ┌──────▼──────┐
+             │   Markdown  │   │    JSON     │
+             │ Incident    │   │    Cases    │
+             │   Report    │   │   Output    │
+             └─────────────┘   └─────────────┘
 ```
 
-## Quick start
+The pipeline keeps **ingestion, detection, scoring, enrichment, correlation, and reporting** separated so each stage remains testable and explainable.
+
+## 🧠 How It Works
+
+1. **Ingest** security events from JSONL.
+2. **Validate** the event structure and preserve the original evidence.
+3. **Detect** suspicious patterns using explicit rules.
+4. **Score** findings using transparent risk logic.
+5. **Enrich** observables from safe local context.
+6. **Correlate** related findings into deterministic analyst cases.
+7. **Report** the result as Markdown and structured JSON.
+
+The system produces analyst guidance from the available evidence; it does **not** claim to replace analyst judgment or predict incidents with certainty.
+
+## 🔐 Security & Responsible Use
+
+AI SOC Copilot is intentionally defensive and local-first.
+
+- No arbitrary command execution
+- No exploitation functionality
+- No external calls by default
+- Synthetic sample data only
+- Strict input validation
+- Safe local enrichment boundaries
+- Secrets excluded from source control
+- Security-focused tests and CI checks
+
+> Use the project with authorized security data and environments only.
+
+## 🚀 Quick Start
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+source .venv/bin/activate
 pip install -e .
-python -m ai_soc_copilot.cli --input samples/security_events.jsonl --output reports/incident_report.md --case-json reports/cases.json
+
+python -m ai_soc_copilot.cli \
+  --input samples/security_events.jsonl \
+  --output reports/incident_report.md \
+  --case-json reports/cases.json
 ```
 
-## Example output
+Example result:
 
 ```text
 Processed events: 5
@@ -82,34 +115,45 @@ Markdown report written to reports/incident_report.md
 Structured cases written to reports/cases.json
 ```
 
-## Case management workflow
+## 🧱 Built With
 
-The case builder groups matching findings by host and user, then produces a deterministic `CASE-*` ID, priority, timeline, observables, context labels, and response guidance. See [`docs/case-management-workflow.md`](docs/case-management-workflow.md).
+- **Python 3.11+**
+- Dataclasses
+- `argparse`
+- JSONL / JSON
+- `pytest`
+- Markdown
+- Mermaid
 
-## Design / branding
+## 🏅 Engineering Quality
 
-Branding direction: minimal SOC engineering, monochrome base, muted blue accent, technical workflow diagrams, and no generic hacker visuals. A Canva README visual/architecture doc was created for portfolio presentation:
+The project uses automated **CI, validation tests, strict input handling, and security-focused engineering practices** to keep the detection and triage pipeline reproducible.
 
-- Canva design: AI SOC Copilot: Cybersecurity Portfolio
-- View link: https://www.canva.com/d/Bh3p8LOEHSJLEvI
+## 📁 Project Structure
 
-## Security and responsible use
+```text
+src/ai_soc_copilot/
+├── parser.py        # Input validation
+├── detection.py     # Detection rules
+├── triage.py        # Risk and prioritization
+├── enrichment.py    # Local enrichment
+├── case_builder.py  # Case correlation
+├── report.py        # Report generation
+├── models.py        # Domain models
+└── cli.py            # CLI
+```
 
-This project is intentionally defensive. It does not exploit systems, collect private data, deploy unsafe code, or run arbitrary commands. All included data is synthetic and safe for portfolio demonstration.
+## 🔭 Vision
 
-See [SECURITY.md](SECURITY.md) for secure-use notes.
+AI SOC Copilot aims to become a practical **analyst-assistance layer for defensive security operations** — helping teams move from raw alerts to explainable findings, organized cases, and actionable next steps.
 
-## Dependency and security notes
+## 🤝 Contributing
 
-- Keep the project local unless intentionally integrating it into a lab dashboard.
-- Use `.env.example` for configuration documentation and never commit `.env` files.
-- Run tests before publishing changes.
-- Treat sample reports as demonstration artifacts, not real incident records.
+Contributions, detection ideas, test cases, and improvements are welcome.
 
-## CV-ready description
+---
 
-**AI SOC Copilot** — Built a local-first defensive SOC triage assistant that ingests SIEM/EDR-style JSONL alerts, validates event schemas, applies transparent detection rules, scores risk, correlates findings into analyst cases, extracts safe observables, and generates Markdown plus JSON case reports with synthetic sample data and validation tests.
-
-## Tech stack
-
-Python 3.11+, dataclasses, argparse, JSONL, pytest, Markdown, Mermaid diagrams, Canva documentation visual.
+<p align="center">
+  <strong>AI SOC Copilot</strong><br>
+  <em>From alert noise to analyst clarity.</em>
+</p>
