@@ -3,7 +3,6 @@
 > **Turn noisy security alerts into clear, evidence-driven SOC decisions.**
 
 <p align="center">
-  <img src="https://img.shields.io/github/actions/workflow/status/Adam-Ghanem/ai-soc-copilot/ci.yml?label=CI" alt="CI">
   <img src="https://img.shields.io/github/stars/Adam-Ghanem/ai-soc-copilot" alt="GitHub stars">
   <img src="https://img.shields.io/github/commit-activity/m/Adam-Ghanem/ai-soc-copilot" alt="Commit activity">
   <img src="https://img.shields.io/github/languages/top/Adam-Ghanem/ai-soc-copilot" alt="Top language">
@@ -88,7 +87,7 @@ AI SOC Copilot is intentionally defensive and local-first.
 - Strict input validation
 - Safe local enrichment boundaries
 - Secrets excluded from source control
-- Security-focused tests and CI checks
+- Security-focused tests
 
 > Use the project with authorized security data and environments only.
 
@@ -127,7 +126,7 @@ Structured cases written to reports/cases.json
 
 ## 🏅 Engineering Quality
 
-The project uses automated **CI, validation tests, strict input handling, and security-focused engineering practices** to keep the detection and triage pipeline reproducible.
+The project emphasizes **reproducible validation, strict input handling, deterministic analysis, and security-focused engineering practices**.
 
 ## 📁 Project Structure
 
