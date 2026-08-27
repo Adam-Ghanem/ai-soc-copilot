@@ -40,16 +40,25 @@ jobs:
       - name: Run tests
         run: pytest -q --disable-warnings --maxfail=1
 
-      - name: Validate sample CLI pipeline
+      - name: Validate sample CLI pipeline and case lifecycle
         run: |
           rm -rf reports/ci
           mkdir -p reports/ci
           python -m ai_soc_copilot.cli \
             --input samples/security_events.jsonl \
             --output reports/ci/incident_report.md \
-            --case-json reports/ci/cases.json
+            --case-json reports/ci/cases.json \
+            --case-store reports/ci/case_store.json
           test -s reports/ci/incident_report.md
           test -s reports/ci/cases.json
+          test -s reports/ci/case_store.json
+
+          CASE_ID="$(python -c 'import json; print(json.load(open("reports/ci/cases.json", encoding="utf-8"))[0]["case_id"])')"
+          python -m ai_soc_copilot.cli --case-action show --case-id "$CASE_ID" --case-store reports/ci/case_store.json
+          python -m ai_soc_copilot.cli --case-action status --case-id "$CASE_ID" --status investigating --case-store reports/ci/case_store.json
+          python -m ai_soc_copilot.cli --case-action note --case-id "$CASE_ID" --note "CI lifecycle verification" --case-store reports/ci/case_store.json
+          python -m ai_soc_copilot.cli --case-action status --case-id "$CASE_ID" --status resolved --case-store reports/ci/case_store.json
+          python -m ai_soc_copilot.cli --case-action list --case-store reports/ci/case_store.json
 
       - name: Upload test artifacts
         if: always()
